@@ -12,44 +12,44 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.idat.model.Curso;
-import com.example.idat.service.CursoService;
+import com.example.idat.model.Universidad;
+import com.example.idat.service.UniversidadService;
 
 @RestController
-@RequestMapping("/curso")
-public class CursoController {
-	
+@RequestMapping("/universidad")
+public class UniversidadController {
+
 	@Autowired
-	private CursoService service;
+	private UniversidadService service;
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/listar")
-	public ResponseEntity<List<Curso>>listar(){
+	public ResponseEntity<List<Universidad>>listar(){
 		
-		return new ResponseEntity<List<Curso>>(service.listarCurso(),HttpStatus.OK);
+		return new ResponseEntity<List<Universidad>>(service.listarUniversidad(),HttpStatus.OK);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST, path = "/guardar")
-	public ResponseEntity<Void> guardar(@RequestBody Curso curso){
-		service.guardarCurso(curso);
+	public ResponseEntity<Void> guardar(@RequestBody Universidad universidad){
+		service.guardarUniversidad(universidad);
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET, path = "/listar/{id}")
-	public @ResponseBody ResponseEntity<Curso> buscarById(@PathVariable Integer id){
-		Curso cursos = service.cursoById(id);
-		if(cursos != null) {
-			return new ResponseEntity<Curso>(cursos, HttpStatus.OK);
+	public @ResponseBody ResponseEntity<Universidad> buscarById(@PathVariable Integer id){
+		Universidad universidad = service.universidadByID(id);
+		if(universidad != null) {
+			return new ResponseEntity<Universidad>(universidad, HttpStatus.OK);
 
 		}
-		return new ResponseEntity<Curso>(HttpStatus.NOT_FOUND);
+		return new ResponseEntity<Universidad>(HttpStatus.NOT_FOUND);
 
 	}
 	
 	@RequestMapping(method = RequestMethod.DELETE, path = "/eliminar/{id}")
 	public ResponseEntity<Void> eliminar(@PathVariable Integer id){
-		Curso curso = service.cursoById(id);
-		if(curso != null) {
-			service.eliminarCurso(id);
+		Universidad universidad = service.universidadByID(id);
+		if(universidad != null) {
+			service.eliminarUnivarsidad(id);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
@@ -57,13 +57,13 @@ public class CursoController {
 	}
 	
 	@RequestMapping(method = RequestMethod.PUT, path = "/editar")
-	public ResponseEntity<Void> editar(@RequestBody Curso curso){
-		Curso cursos = service.cursoById(curso.getIdCurso());
-		if(cursos!= null) {
-			service.editarCurso(cursos);
+	public ResponseEntity<Void> editar(@RequestBody Universidad universidad){
+		Universidad universidades = service.universidadByID(universidad.getIdUniversidad());
+		if(universidades!= null) {
+			service.editarUniversidad(universidades);
 			return new ResponseEntity<Void>(HttpStatus.OK);
 		}
 		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
 	}
-
+	
 }
